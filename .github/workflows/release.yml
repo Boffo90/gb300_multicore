@@ -9,7 +9,7 @@ name: Create Canary Release
 jobs:
   build:
     name: Create Canary Release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
         image: prosty/gb300-multicore-builder:v1.1-release
     steps:
