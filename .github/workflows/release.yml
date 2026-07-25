@@ -16,7 +16,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          submodules: 'recursive'
+          submodules: false
+      - name: Fetch submodules (tolerant of broken optional deps)
+        run: |
+          git config --global --add safe.directory '*'
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          # top-level submodules: cores, assets/coreconfig, libs/libretro-common
+          git submodule update --init --jobs 4
+          # all core submodules inside 'cores' (first level; every one is on GitHub)
+          git -C cores submodule update --init --jobs 8
+          # recurse into any core that bundles its own git deps, but tolerate
+          # unreachable ones (e.g. ecwolf's Bitbucket SDL deps — that core is not built)
+          git submodule foreach --recursive 'git submodule update --init --jobs 4 || true' || true
       - name: Build the release
         run: ./.github/scripts/entrypoint.sh
       - name: Upload binaries to release
