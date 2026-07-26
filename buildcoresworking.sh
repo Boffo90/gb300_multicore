@@ -109,9 +109,12 @@
 echo "-- snes02 make --"
 make clean CONSOLE=snes02     CORE=cores/snes9x2002
 make CONSOLE=snes02     CORE=cores/snes9x2002
-echo "-- snes make --"
-make clean CONSOLE=snes       CORE=cores/snes9x2005 platform=sf2000
-make CONSOLE=snes       CORE=cores/snes9x2005 platform=sf2000
+echo "-- snes make (chimerasnes: better special-chip/DSP-1 accuracy, e.g. Super Mario Kart) --"
+make clean CONSOLE=snes       CORE=cores/chimerasnes platform=sf2000
+make CONSOLE=snes       CORE=cores/chimerasnes platform=sf2000
+# original snes9x2005 in the snes slot (kept commented for easy revert):
+# make clean CONSOLE=snes     CORE=cores/snes9x2005 platform=sf2000
+# make CONSOLE=snes     CORE=cores/snes9x2005 platform=sf2000
 # echo "-- sega make --"
 # make clean CONSOLE=sega       CORE=cores/picodrive MAKEFILE=-fMakefile.libretro
 # make CONSOLE=sega       CORE=cores/picodrive MAKEFILE=-fMakefile.libretro
